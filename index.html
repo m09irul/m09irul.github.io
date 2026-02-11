@@ -26,6 +26,7 @@
             --primary-hover: #4f46e5;
             --secondary: #a855f7; /* Purple 500 */
             --accent: #38bdf8;    /* Sky Blue */
+            --gold: #fbbf24;      /* Amber 400 (For Awards) */
             
             /* Glassmorphism Card Settings */
             --card-bg: rgba(30, 41, 59, 0.6);
@@ -65,7 +66,7 @@
         h1, h2, h3 {
             font-family: var(--font-display);
             font-weight: 700;
-            letter-spacing: -0.02em; /* Modern tight tracking */
+            letter-spacing: -0.02em;
         }
 
         a {
@@ -148,11 +149,11 @@
 
         .nav-links {
             display: flex;
-            gap: 35px;
+            gap: 30px;
         }
 
         .nav-links a {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
             font-weight: 500;
             position: relative;
@@ -185,7 +186,6 @@
             justify-content: center;
             text-align: center;
             position: relative;
-            /* Placeholder Gradient Background */
             background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('https://picsum.photos/seed/tech2/1920/1080'); 
             background-size: cover;
             background-position: center;
@@ -233,89 +233,33 @@
             box-shadow: 0 20px 30px -10px rgba(99, 102, 241, 0.5);
         }
 
-        /* --- ABOUT SECTION --- */
-        .about {
-            padding: var(--spacing-section) 0;
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 60px;
-            align-items: start;
-        }
-
-        .about-text h3 {
-            color: var(--text-main);
-            margin-bottom: 20px;
-            font-size: 1.8rem;
-        }
-
-        .about-text p {
-            margin-bottom: 20px;
-            color: var(--text-muted);
-        }
-
-        .highlight-box {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 35px;
-            border-radius: var(--radius-lg);
+        /* --- SHARED CARD STYLES --- */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(var(--card-blur));
+            -webkit-backdrop-filter: blur(var(--card-blur));
             border: 1px solid var(--card-border);
-            backdrop-filter: blur(5px);
-        }
-
-        .skill-category {
-            margin-bottom: 25px;
-        }
-        .skill-category h4 {
-            color: var(--primary);
-            margin-bottom: 12px;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        .skill-tags {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .tag {
-            font-size: 0.85rem;
-            padding: 6px 16px;
-            background: rgba(99, 102, 241, 0.1);
-            color: var(--text-main);
-            border-radius: 50px;
-            border: 1px solid rgba(99, 102, 241, 0.2);
+            flex-direction: column;
+            height: 100%;
         }
 
-        .edu-list {
-            margin-top: 30px;
-            list-style: none;
-        }
-        .edu-item {
-            margin-bottom: 25px;
-            padding-left: 20px;
-            border-left: 3px solid var(--secondary);
-        }
-        .edu-year {
-            font-size: 0.8rem;
-            color: var(--accent);
-            font-weight: 600;
-            margin-bottom: 4px;
-            display: block;
-        }
-        .edu-item strong {
-            color: white;
-            font-size: 1.05rem;
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+            border-color: rgba(99, 102, 241, 0.3);
         }
 
-        /* --- PORTFOLIO GRID --- */
+        /* --- PROJECTS SECTION (MOVED UP) --- */
         .portfolio {
             padding: var(--spacing-section) 0;
             position: relative;
         }
 
-        /* Decorative background glow */
         .portfolio::before {
             content: '';
             position: absolute;
@@ -337,27 +281,6 @@
             gap: 30px;
         }
 
-        /* CARD DESIGN - GLASSMORPHISM */
-        .card {
-            background: var(--card-bg);
-            backdrop-filter: blur(var(--card-blur));
-            -webkit-backdrop-filter: blur(var(--card-blur));
-            border: 1px solid var(--card-border);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
-            border-color: rgba(99, 102, 241, 0.3);
-        }
-
-        /* VIDEO WRAPPER (16:9) */
         .video-wrapper {
             position: relative;
             padding-bottom: 56.25%;
@@ -374,7 +297,6 @@
             border: none;
         }
 
-        /* CARD CONTENT */
         .card-content {
             padding: 24px;
             flex-grow: 1;
@@ -436,6 +358,122 @@
         .btn-secondary:hover {
             border-color: white;
             color: white;
+        }
+
+        /* --- ABOUT SECTION (MOVED DOWN) --- */
+        .about {
+            padding: var(--spacing-section) 0;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            color: var(--text-muted);
+        }
+
+        .highlight-box {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 35px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(5px);
+        }
+
+        .skill-category {
+            margin-bottom: 25px;
+        }
+        .skill-category h4 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .tag {
+            font-size: 0.85rem;
+            padding: 6px 16px;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--text-main);
+            border-radius: 50px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .edu-list {
+            margin-top: 30px;
+            list-style: none;
+        }
+        .edu-item {
+            margin-bottom: 25px;
+            padding-left: 20px;
+            border-left: 3px solid var(--secondary);
+        }
+        .edu-year {
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 4px;
+            display: block;
+        }
+        .edu-item strong {
+            color: white;
+            font-size: 1.05rem;
+        }
+
+        /* --- ACCOMPLISHMENTS SECTION (ADDED) --- */
+        .accomplishments {
+            padding: var(--spacing-section) 0;
+            background: linear-gradient(to bottom, transparent, rgba(251, 191, 36, 0.05)); /* Subtle Gold Tint */
+        }
+
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .award-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            padding: 30px;
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(251, 191, 36, 0.3); /* Gold border */
+            position: relative;
+        }
+        
+        .award-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--gold);
+        }
+
+        .award-card h3 {
+            color: white;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .award-meta {
+            color: var(--gold);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .award-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
         }
 
         /* --- CONTACT --- */
@@ -557,8 +595,9 @@
 
                 <div class="nav-links">
                     <a href="#hero" class="nav-link">Home</a>
-                    <a href="#about" class="nav-link">About</a>
                     <a href="#portfolio" class="nav-link">Projects</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#accomplishments" class="nav-link">Awards</a>
                     <a href="#contact" class="nav-link">Contact</a>
                 </div>
             </nav>
@@ -574,60 +613,7 @@
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <div class="about-grid">
-                <div class="about-text fade-in">
-                    <h2 class="section-title" style="text-align: left; left: 0; transform: none;">About Me</h2>
-                    <p>Hi there! I'm Monirul Islam, a tech enthusiast ready to take on challenges. I have completed my MSc in the Department of <b>Computer Science</b> at Shizuoka University.</p>
-                    <p>I have been working with <b>Unity3D</b> game engine for almost 5 years, developing prototypes for Games, Augmented Reality, and Virtual Reality applications. My research focuses on "Human Agent Interaction".</p>
-                    <p>I also conducted workshops on Game Development with the <b>US Embassy Dhaka</b> and <b>Arduino Community Bangladesh</b> in 2021.</p>
-                    
-                    <ul class="edu-list">
-                        <li class="edu-item">
-                            <span class="edu-year">2023 - 2025</span>
-                            <strong>M.Sc Computer Science</strong> - Shizuoka University, Japan
-                        </li>
-                        <li class="edu-item">
-                            <span class="edu-year">2018 - 2023</span>
-                            <strong>B.Sc CSE</strong> - University of Rajshahi (CGPA: 3.47/4.00)
-                        </li>
-                        <li class="edu-item">
-                            <span class="edu-year">Accomplishments</span>
-                            NASA Space Apps Challenge 2021 (Global Nominee), Techfest-2019 Runner Up.
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="skills-box highlight-box fade-in">
-                    <h3 style="color: white; margin-bottom: 25px;">Tech Arsenal</h3>
-                    
-                    <div class="skill-category">
-                        <h4>Core Skills</h4>
-                        <div class="skill-tags">
-                            <span class="tag">Unity3D Development</span>
-                            <span class="tag">C# for Unity</span>
-                            <span class="tag">Virtual Reality (Oculus, SteamVR)</span>
-                            <span class="tag">Augmented Reality (Vuforia, AR Foundation)</span>
-                        </div>
-                    </div>
-
-                    <div class="skill-category">
-                        <h4>Familiar With</h4>
-                        <div class="skill-tags">
-                            <span class="tag">Python</span>
-                            <span class="tag">Machine Learning</span>
-                            <span class="tag">C++</span>
-                            <span class="tag">Git / GitHub</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Portfolio Section -->
+    <!-- Projects Section (MOVED HERE) -->
     <section id="portfolio" class="portfolio">
         <div class="container">
             <h2 class="section-title">Selected Works</h2>
@@ -881,6 +867,100 @@
                         </div>
                     </div>
                 </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section (MOVED DOWN) -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text fade-in">
+                    <h2 class="section-title" style="text-align: left; left: 0; transform: none;">About Me</h2>
+                    <p>Hi there! I'm Monirul Islam, a tech enthusiastic guy who is ready to take challenges. I have completed my MSc in the Department of <b>Computer Science</b> at Shizuoka University.</p>
+                    <p>I have been working with <b>Unity3D</b> game engine for almost 5 years, developing prototypes for Games, Augmented Reality, and Virtual Reality applications. My research focuses on "Human Agent Interaction".</p>
+                    <p>I also conducted workshops on Game Development with the <b>US Embassy Dhaka</b> and <b>Arduino Community Bangladesh</b> in 2021.</p>
+                    
+                    <ul class="edu-list">
+                        <li class="edu-item">
+                            <span class="edu-year">2023 - 2025</span>
+                            <strong>M.Sc Computer Science</strong> - Shizuoka University, Japan
+                        </li>
+                        <li class="edu-item">
+                            <span class="edu-year">2018 - 2023</span>
+                            <strong>B.Sc CSE</strong> - University of Rajshahi (CGPA: 3.47/4.00)
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="skills-box highlight-box fade-in">
+                    <h3 style="color: white; margin-bottom: 25px;">Tech Arsenal</h3>
+                    
+                    <div class="skill-category">
+                        <h4>Core Skills</h4>
+                        <div class="skill-tags">
+                            <span class="tag">Unity3D Development</span>
+                            <span class="tag">C# for Unity</span>
+                            <span class="tag">Virtual Reality (Oculus, SteamVR)</span>
+                            <span class="tag">Augmented Reality (Vuforia, AR Foundation)</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4>Familiar With</h4>
+                        <div class="skill-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Machine Learning</span>
+                            <span class="tag">C++</span>
+                            <span class="tag">Git / GitHub</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Accomplishments Section (ADDED HERE) -->
+    <section id="accomplishments" class="accomplishments">
+        <div class="container">
+            <h2 class="section-title">Accomplishments</h2>
+            <p class="subtitle">AWARDS & ACHIEVEMENTS</p>
+
+            <div class="awards-grid">
+                
+                <!-- Award 1 -->
+                <div class="award-card fade-in">
+                    <div class="award-icon">🏆</div>
+                    <span class="award-meta">October 2021</span>
+                    <h3>NASA Space Apps Challenge</h3>
+                    <p class="award-desc">
+                        <strong>Global Nominee & Rajshahi Divisional Champion.</strong><br>
+                        Presented "EYE06", a realtime space trash visualization android app made with Unity3D. Team "Three13".
+                    </p>
+                </div>
+
+                <!-- Award 2 -->
+                <div class="award-card fade-in">
+                    <div class="award-icon">🥈</div>
+                    <span class="award-meta">December 2019</span>
+                    <h3>Techfest-2019 (2nd Runners Up)</h3>
+                    <p class="award-desc">
+                        <strong>Varendra University.</strong><br>
+                        It was a software showcasing event where we presented our first VR game called "GOG-VR". Team "Conquerers".
+                    </p>
+                </div>
+
+                <!-- Award 3 -->
+                <div class="award-card fade-in">
+                    <div class="award-icon">🥈</div>
+                    <span class="award-meta">March 2019</span>
+                    <h3>Media Tech Challenge (Runner-up)</h3>
+                    <p class="award-desc">
+                        <strong>DW Akademie.</strong><br>
+                        It was basically a Media tech challenge (Hackathon) event where we presented our idea of women harassment prevention in University of Rajshahi campus. Team "Avengers".
+                    </p>
+                </div>
 
             </div>
         </div>
