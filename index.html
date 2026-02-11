@@ -365,8 +365,10 @@
             gap: 30px;
         }
 
-        /* --- OPTIMIZED VIDEO WRAPPER (LAZY LOAD) --- */
-        .video-wrapper {
+        /* --- OPTIMIZED VIDEO & IMAGE WRAPPERS --- */
+        
+        /* Default Wrapper (16:9 Landscape) */
+        .media-wrapper, .video-wrapper {
             position: relative;
             padding-bottom: 56.25%; /* 16:9 */
             height: 0;
@@ -375,19 +377,24 @@
             cursor: pointer;
         }
 
-        .video-wrapper .thumb {
+        /* VERTICAL WRAPPER (9:16 Portrait) - MODIFICATION HERE */
+        .media-wrapper.vertical {
+            padding-bottom: 177.77%; /* 9:16 Aspect Ratio */
+        }
+
+        .video-wrapper .thumb, .media-wrapper img {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover; /* Ensures image fills the container without distortion */
             transition: transform 0.3s ease;
             z-index: 1;
             opacity: 0.8;
         }
 
-        .card:hover .thumb {
+        .card:hover .thumb, .card:hover .media-wrapper img {
             transform: scale(1.05);
             opacity: 1;
         }
@@ -459,6 +466,9 @@
             font-weight: 700;
             letter-spacing: 1px;
             margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .card-title {
@@ -473,6 +483,17 @@
             color: var(--text-muted);
             margin-bottom: 20px;
             flex-grow: 1;
+        }
+        
+        .badge-dev {
+            background: var(--gold);
+            color: #000;
+            font-size: 0.65rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .card-links {
@@ -1040,7 +1061,7 @@
                     <div class="card-content">
                         <span class="card-category">AR / History</span>
                         <h3 class="card-title">71 er Campus</h3>
-                        <p class="card-desc">An AR app to know the history associated with University of Rajshahi and Bangladesh Liberation War (Vuforia).</p>
+                        <p class="card-desc">An AR app to know history associated with University of Rajshahi and Bangladesh Liberation War (Vuforia).</p>
                         <div class="card-links">
                             <a href="https://github.com/MIShanto/71-er-campus" target="_blank" class="card-link-btn btn-primary">GitHub</a>
                             <a href="https://github.com/MIShanto/71-er-campus/releases/tag/App" target="_blank" class="card-link-btn btn-secondary">App</a>
@@ -1057,7 +1078,7 @@
                     <div class="card-content">
                         <span class="card-category">VR</span>
                         <h3 class="card-title">Run Buddy Run</h3>
-                        <p class="card-desc">A 3D runner mobile VR game prototype. Mount the headset and go.</p>
+                        <p class="card-desc">A 3D runner mobile VR game prototype. Mount headset and go.</p>
                         <div class="card-links">
                             <a href="https://github.com/MIShanto/Run-Buddy-Run-Prototype-" target="_blank" class="card-link-btn btn-primary">GitHub</a>
                             <a href="https://github.com/MIShanto/Run-Buddy-Run-Prototype-/releases" target="_blank" class="card-link-btn btn-secondary">Prototype</a>
@@ -1068,12 +1089,12 @@
                  <!-- PROJECT 16 -->
                  <article class="card fade-in">
                     <div class="video-wrapper" data-src="https://www.youtube.com/embed/dGins3okGJc">
-                        <img src="https://img.youtube.com/vi/dGins3okGJc/hqdefault.jpg" class="thumb" alt="Guardian of the Garden">
+                        <img src="https://img.youtube.com/vi/dGins3okGJc/hqdefault.jpg" class="thumb" alt="Guardian of Garden">
                         <div class="play-overlay"><div class="play-icon"></div></div>
                     </div>
                     <div class="card-content">
                         <span class="card-category">Game Dev</span>
-                        <h3 class="card-title">Guardian of the Garden</h3>
+                        <h3 class="card-title">Guardian of Garden</h3>
                         <p class="card-desc">A 2D Strategy game. Place defenders and protect your garden.</p>
                         <div class="card-links">
                             <a href="https://github.com/MIShanto/Gaurdian-Of-The-Garden" target="_blank" class="card-link-btn btn-primary">GitHub</a>
@@ -1091,17 +1112,16 @@
                     <div class="card-content">
                         <span class="card-category">VR</span>
                         <h3 class="card-title">GOG-VR v:1.0</h3>
-                        <p class="card-desc">It is the first VR version of our game "Guardian of the Garden".</p>
+                        <p class="card-desc">It is first VR version of our game "Guardian of the Garden".</p>
                         <div class="card-links">
                             <a href="https://github.com/MIShanto/GOG-VR" target="_blank" class="card-link-btn btn-primary">GitHub</a>
                         </div>
                     </div>
                 </article>
                
-                <!-- SPARK AR 1: HNY 2023 -->
+                <!-- SPARK AR 1: HNY 2023 (MODIFIED: Added 'vertical' class) -->
                 <article class="card fade-in">
-                    <div class="media-wrapper">
-                        <!-- PLACEHOLDER IMAGE: REPLACE src WITH 'img/HNY.jpeg' -->
+                    <div class="media-wrapper vertical">
                         <img src="img/HNY.jpeg" alt="HNY 2023">
                     </div>
                     <div class="card-content">
@@ -1111,11 +1131,10 @@
                     </div>
                 </article>
 
-                <!-- SPARK AR 2: Fifa World Cup 2022 -->
+                <!-- SPARK AR 2: Fifa World Cup 2022 (MODIFIED: Added 'vertical' class & fixed path) -->
                 <article class="card fade-in">
-                    <div class="media-wrapper">
-                        <!-- PLACEHOLDER IMAGE: REPLACE src WITH 'img/Fifa2022.jpeg' -->
-                        <img src="img/Fifa2022.jpeg/600/338" alt="Fifa 2022">
+                    <div class="media-wrapper vertical">
+                        <img src="img/Fifa2022.jpeg" alt="Fifa 2022">
                     </div>
                     <div class="card-content">
                         <span class="card-category">Spark AR Filter</span>
@@ -1124,10 +1143,9 @@
                     </div>
                 </article>
 
-                <!-- SPARK AR 3: Bangla Noboborsho -->
+                <!-- SPARK AR 3: Bangla Noboborsho (MODIFIED: Added 'vertical' class) -->
                 <article class="card fade-in">
-                    <div class="media-wrapper">
-                        <!-- PLACEHOLDER IMAGE: REPLACE src WITH 'img/banglaNewYear.jpeg' -->
+                    <div class="media-wrapper vertical">
                         <img src="img/banglaNewYear.jpeg" alt="Bangla New Year">
                     </div>
                     <div class="card-content">
@@ -1186,9 +1204,9 @@
             <div class="about-grid">
                 <div class="about-text fade-in">
                     <h2 class="section-title" style="text-align: left; left: 0; transform: none;">About Me</h2>
-                    <p>Hi there! I'm Monirul Islam, a tech enthusiastic guy who is ready to take challenges. I have completed my MSc in the Department of <b>Computer Science</b> at Shizuoka University.</p>
+                    <p>Hi there! I'm Monirul Islam, a tech enthusiastic guy who is ready to take challenges. I have completed my MSc in Department of <b>Computer Science</b> at Shizuoka University.</p>
                     <p>I have been working with <b>Unity3D</b> game engine for almost 5 years, developing prototypes for Games, Augmented Reality, and Virtual Reality applications. My research focuses on "Human Agent Interaction".</p>
-                    <p>I also conducted workshops on Game Development with the <b>US Embassy Dhaka</b> and <b>Arduino Community Bangladesh</b> in 2021.</p>
+                    <p>I also conducted workshops on Game Development with <b>US Embassy Dhaka</b> and <b>Arduino Community Bangladesh</b> in 2021.</p>
                     
                     <ul class="edu-list">
                         <li class="edu-item">
