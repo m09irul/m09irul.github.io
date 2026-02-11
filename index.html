@@ -11,25 +11,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
 
     <style>
-        /* --- CSS VARIABLES --- */
+        /* --- CSS VARIABLES (PREMIUM THEME) --- */
         :root {
-            /* Deep Gradient Backgrounds */
-            --bg-color: #0f172a; 
-            --bg-gradient: radial-gradient(circle at top right, #2e1065 0%, #0f172a 40%, #000000 10%);
+            /* DEEP, RICH BACKGROUND (Less Purple, More Slate/Midnight) */
+            --bg-color: #020617; 
+            --bg-gradient: linear-gradient(135deg, #020617 0%, #0f172a 40%, #1e293b 100%);
             
             /* Modern Text Colors */
-            --text-main: #f8fafc;
+            --text-main: #f1f5f9; /* Off-white */
             --text-muted: #94a3b8;
             
-            /* Palette: Electric Indigo & Violet */
-            --primary: #6366f1;   /* Indigo 500 */
-            --primary-hover: #4f46e5;
-            --secondary: #a855f7; /* Purple 500 */
-            --accent: #38bdf8;    /* Sky Blue */
-            --gold: #fbbf24;      /* Amber 400 (For Awards) */
+            /* PALETTE: Electric Cyan & Deep Slate */
+            --primary: #06b6d4;   /* Cyan 500 - "Cool" Tech Feel */
+            --primary-hover: #0891b2;
+            --secondary: #3b82f6; /* Blue 500 - For variety */
+            --accent: #22d3ee;    /* Cyan 400 */
+            
+            /* Gold for Awards (Preserved but refined) */
+            --gold: #f59e0b;      /* Amber 500 */
             
             /* Glassmorphism Card Settings */
-            --card-bg: rgba(30, 41, 59, 0.6);
+            --card-bg: rgba(15, 23, 42, 0.6);
             --card-border: rgba(255, 255, 255, 0.08);
             --card-blur: 16px;
             
@@ -62,14 +64,14 @@
             min-height: 100vh;
         }
 
-        /* --- PRELOADER STYLES (NEW) --- */
+        /* --- PRELOADER STYLES --- */
         .preloader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
-            background: #0f172a; /* Matches body */
+            background: #020617; /* Matches new body */
             z-index: 10000;
             display: flex;
             justify-content: center;
@@ -89,7 +91,7 @@
         .loader-ring {
             width: 60px;
             height: 60px;
-            border: 4px solid rgba(99, 102, 241, 0.2);
+            border: 4px solid rgba(6, 182, 212, 0.2); /* Cyan tint */
             border-top: 4px solid var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
@@ -111,7 +113,7 @@
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 0.2; }
+            0%, 100% { opacity: 0.4; }
             50% { opacity: 1; }
         }
 
@@ -164,6 +166,7 @@
             font-weight: 600;
             margin-bottom: 4rem;
             opacity: 0.9;
+            letter-spacing: 1px;
         }
 
         /* --- HEADER --- */
@@ -173,7 +176,7 @@
             left: 0;
             width: 100%;
             padding: 20px 0;
-            background: rgba(15, 23, 42, 0.85);
+            background: rgba(2, 6, 23, 0.85); /* Darker match */
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--card-border);
             z-index: 1000;
@@ -239,17 +242,40 @@
             justify-content: center;
             text-align: center;
             position: relative;
-            /* UPDATED HERO PHOTO: Abstract VR/Tech Image */
-            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('https://github.com/m09irul/m09irul.github.io/blob/master/img/sit_mi.jpg'); 
+            
+            /* 
+               FIX APPLIED:
+               Used a reliable Unsplash source for the background.
+               To use your own GitHub image, change the URL below to:
+               url('https://raw.githubusercontent.com/m09irul/m09irul.github.io/master/img/sit_mi.jpg')
+            */
+            background: linear-gradient(rgba(2, 6, 23, 0.6), rgba(2, 6, 23, 0.8)), 
+                        url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop'); 
+            
             background-size: cover;
             background-position: center;
+            background-attachment: fixed; /* Parallax effect */
             padding-top: 80px;
+        }
+
+        /* Decorative glow behind hero text */
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            filter: blur(120px);
+            opacity: 0.15;
+            border-radius: 50%;
+            z-index: 0;
         }
 
         .hero-content {
             z-index: 1;
             max-width: 800px;
             padding: 0 20px;
+            position: relative;
         }
 
         .hero-content h1 {
@@ -259,11 +285,12 @@
             background: linear-gradient(to right, #ffffff, #cbd5e1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .hero-content p {
             font-size: 1.3rem;
-            color: var(--text-muted);
+            color: #e2e8f0; /* Lighter than muted for readability */
             margin: 0 auto 40px;
             font-weight: 300;
         }
@@ -276,15 +303,18 @@
             font-family: var(--font-display);
             font-weight: 600;
             border-radius: 50px;
-            box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.4); /* Cyan glow */
             transition: all 0.3s ease;
             z-index: 2;
             border: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
         }
 
         .cta-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 20px 30px -10px rgba(99, 102, 241, 0.5);
+            box-shadow: 0 20px 30px -10px rgba(6, 182, 212, 0.6);
         }
 
         /* --- SHARED CARD STYLES --- */
@@ -305,7 +335,7 @@
         .card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
-            border-color: rgba(99, 102, 241, 0.3);
+            border-color: rgba(6, 182, 212, 0.3); /* Cyan border on hover */
         }
 
         /* --- PROJECTS SECTION --- */
@@ -324,7 +354,7 @@
             height: 600px;
             background: var(--primary);
             filter: blur(150px);
-            opacity: 0.08;
+            opacity: 0.05; /* Subtle glow */
             z-index: -1;
             pointer-events: none;
         }
@@ -354,10 +384,12 @@
             object-fit: cover;
             transition: transform 0.3s ease;
             z-index: 1;
+            opacity: 0.8;
         }
 
-        .video-wrapper:hover .thumb {
+        .card:hover .thumb {
             transform: scale(1.05);
+            opacity: 1;
         }
 
         .play-overlay {
@@ -374,7 +406,7 @@
             transition: background 0.3s ease;
         }
 
-        .video-wrapper:hover .play-overlay {
+        .card:hover .play-overlay {
             background: rgba(0,0,0,0.1);
         }
 
@@ -386,7 +418,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 0 10px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 0 0 10px rgba(6, 182, 212, 0.2);
             transition: transform 0.3s ease;
         }
         
@@ -422,7 +454,7 @@
 
         .card-category {
             font-size: 0.75rem;
-            color: var(--secondary);
+            color: var(--accent); /* Cyan for categories */
             text-transform: uppercase;
             font-weight: 700;
             letter-spacing: 1px;
@@ -460,7 +492,7 @@
 
         .btn-primary {
             background: var(--primary);
-            color: white;
+            color: #0f172a; /* Dark text on Cyan button for contrast */
         }
         .btn-primary:hover {
             background: var(--primary-hover);
@@ -519,10 +551,10 @@
         .tag {
             font-size: 0.85rem;
             padding: 6px 16px;
-            background: rgba(99, 102, 241, 0.1);
+            background: rgba(6, 182, 212, 0.1); /* Cyan low opacity */
             color: var(--text-main);
             border-radius: 50px;
-            border: 1px solid rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(6, 182, 212, 0.2);
         }
 
         .edu-list {
@@ -532,7 +564,7 @@
         .edu-item {
             margin-bottom: 25px;
             padding-left: 20px;
-            border-left: 3px solid var(--secondary);
+            border-left: 3px solid var(--primary);
         }
         .edu-year {
             font-size: 0.8rem;
@@ -549,7 +581,8 @@
         /* --- ACCOMPLISHMENTS SECTION --- */
         .accomplishments {
             padding: var(--spacing-section) 0;
-            background: linear-gradient(to bottom, transparent, rgba(251, 191, 36, 0.05)); /* Subtle Gold Tint */
+            /* Subtle Gold Tint in background */
+            background: linear-gradient(to bottom, transparent, rgba(245, 158, 11, 0.03)); 
         }
 
         .awards-grid {
@@ -562,10 +595,16 @@
             background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
             padding: 30px;
             border-radius: var(--radius-lg);
-            border: 1px solid rgba(251, 191, 36, 0.3); /* Gold border */
+            border: 1px solid rgba(245, 158, 11, 0.2); /* Gold border */
             position: relative;
+            transition: transform 0.3s ease;
         }
         
+        .award-card:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(145deg, rgba(245, 158, 11, 0.1) 0%, rgba(255,255,255,0.02) 100%);
+        }
+
         .award-icon {
             font-size: 2.5rem;
             margin-bottom: 15px;
@@ -634,7 +673,7 @@
             font-weight: 500;
         }
         .socials a:hover {
-            color: white;
+            color: var(--primary);
         }
 
         /* --- FOOTER --- */
@@ -675,7 +714,7 @@
                 top: 70px;
                 left: 0;
                 width: 100%;
-                background: rgba(15, 23, 42, 0.98);
+                background: rgba(2, 6, 23, 0.98);
                 padding: 30px;
                 border-bottom: 1px solid var(--card-border);
             }
@@ -1143,8 +1182,8 @@
                     // Remove from DOM after fade out
                     setTimeout(() => {
                         preloader.style.display = 'none';
-                    }, 800); 
-                }, 3500);
+                    }, 200); 
+                }, 1500);
             });
 
 
