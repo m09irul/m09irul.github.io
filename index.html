@@ -62,6 +62,59 @@
             min-height: 100vh;
         }
 
+        /* --- PRELOADER STYLES (NEW) --- */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #0f172a; /* Matches body */
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease-out, visibility 0.8s;
+        }
+        
+        .preloader.loaded {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-ring {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(99, 102, 241, 0.2);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        .loader-text {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            color: var(--primary);
+            text-transform: uppercase;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
         /* --- TYPOGRAPHY --- */
         h1, h2, h3 {
             font-family: var(--font-display);
@@ -186,7 +239,8 @@
             justify-content: center;
             text-align: center;
             position: relative;
-            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('https://picsum.photos/seed/tech2/1920/1080'); 
+            /* UPDATED HERO PHOTO: Abstract VR/Tech Image */
+            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1622979135225-d2ba269fb1bd3?q=80&w=1920&auto=format&fit=crop'); 
             background-size: cover;
             background-position: center;
             padding-top: 80px;
@@ -254,7 +308,7 @@
             border-color: rgba(99, 102, 241, 0.3);
         }
 
-        /* --- PROJECTS SECTION (MOVED UP) --- */
+        /* --- PROJECTS SECTION --- */
         .portfolio {
             padding: var(--spacing-section) 0;
             position: relative;
@@ -281,11 +335,72 @@
             gap: 30px;
         }
 
+        /* --- OPTIMIZED VIDEO WRAPPER (LAZY LOAD) --- */
         .video-wrapper {
             position: relative;
-            padding-bottom: 56.25%;
+            padding-bottom: 56.25%; /* 16:9 */
             height: 0;
             background: #000;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .video-wrapper .thumb {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            z-index: 1;
+        }
+
+        .video-wrapper:hover .thumb {
+            transform: scale(1.05);
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            transition: background 0.3s ease;
+        }
+
+        .video-wrapper:hover .play-overlay {
+            background: rgba(0,0,0,0.1);
+        }
+
+        .play-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 0 10px rgba(99, 102, 241, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .play-icon::after {
+            content: '';
+            border-style: solid;
+            border-width: 10px 0 10px 16px;
+            border-color: transparent transparent transparent white;
+            margin-left: 4px;
+        }
+
+        .video-wrapper:hover .play-icon {
+            transform: scale(1.1);
+            background: var(--primary-hover);
         }
 
         .video-wrapper iframe {
@@ -295,6 +410,7 @@
             width: 100%;
             height: 100%;
             border: none;
+            z-index: 10;
         }
 
         .card-content {
@@ -360,7 +476,7 @@
             color: white;
         }
 
-        /* --- ABOUT SECTION (MOVED DOWN) --- */
+        /* --- ABOUT SECTION --- */
         .about {
             padding: var(--spacing-section) 0;
         }
@@ -430,7 +546,7 @@
             font-size: 1.05rem;
         }
 
-        /* --- ACCOMPLISHMENTS SECTION (ADDED) --- */
+        /* --- ACCOMPLISHMENTS SECTION --- */
         .accomplishments {
             padding: var(--spacing-section) 0;
             background: linear-gradient(to bottom, transparent, rgba(251, 191, 36, 0.05)); /* Subtle Gold Tint */
@@ -585,6 +701,14 @@
 </head>
 <body>
 
+    <!-- PRELOADER -->
+    <div class="preloader">
+        <div class="loader-content">
+            <div class="loader-ring"></div>
+            <div class="loader-text">INITIALIZING SYSTEM...</div>
+        </div>
+    </div>
+
     <!-- Header -->
     <header>
         <div class="container">
@@ -613,7 +737,7 @@
         </div>
     </section>
 
-    <!-- Projects Section (MOVED HERE) -->
+    <!-- Projects Section -->
     <section id="portfolio" class="portfolio">
         <div class="container">
             <h2 class="section-title">Selected Works</h2>
@@ -623,8 +747,9 @@
                 
                 <!-- PROJECT 1 -->
                 <article class="card fade-in">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/r5eTUeBATI4" title="Galactic Fury" allowfullscreen></iframe>
+                    <div class="video-wrapper" data-src="https://www.youtube.com/embed/r5eTUeBATI4">
+                        <img src="https://img.youtube.com/vi/r5eTUeBATI4/hqdefault.jpg" class="thumb" alt="Galactic Fury">
+                        <div class="play-overlay"><div class="play-icon"></div></div>
                     </div>
                     <div class="card-content">
                         <span class="card-category">Game Dev</span>
@@ -639,20 +764,22 @@
 
                 <!-- PROJECT 2 -->
                 <article class="card fade-in">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/kKhbSQfSxt8" title="Aberrant Exodus" allowfullscreen></iframe>
+                    <div class="video-wrapper" data-src="https://www.youtube.com/embed/kKhbSQfSxt8">
+                        <img src="https://img.youtube.com/vi/kKhbSQfSxt8/hqdefault.jpg" class="thumb" alt="Aberrant Exodus">
+                        <div class="play-overlay"><div class="play-icon"></div></div>
                     </div>
                     <div class="card-content">
                         <span class="card-category">Game Dev</span>
                         <h3 class="card-title">Aberrant Exodus</h3>
-                        <p class="card-desc">A 2D platformer game for Acerola Game Jam-0 where the world changes when time changes.</p>
+                        <p class="card-desc">A 2D platformer game for Acerola Game Jam-0 where world changes when time changes.</p>
                     </div>
                 </article>
 
                 <!-- PROJECT 3 -->
                 <article class="card fade-in">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/SPhhY40kdB0" title="Boishakhi Management" allowfullscreen></iframe>
+                    <div class="video-wrapper" data-src="https://www.youtube.com/embed/SPhhY40kdB0">
+                        <img src="https://img.youtube.com/vi/SPhhY40kdB0/hqdefault.jpg" class="thumb" alt="Boishakhi Management">
+                        <div class="play-overlay"><div class="play-icon"></div></div>
                     </div>
                     <div class="card-content">
                         <span class="card-category">Utility App</span>
@@ -663,8 +790,9 @@
 
                 <!-- PROJECT 4 -->
                 <article class="card fade-in">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/c2hEWiw-yD0" title="Rocket Invader" allowfullscreen></iframe>
+                    <div class="video-wrapper" data-src="https://www.youtube.com/embed/c2hEWiw-yD0">
+                        <img src="https://img.youtube.com/vi/c2hEWiw-yD0/hqdefault.jpg" class="thumb" alt="Rocket Invader">
+                        <div class="play-overlay"><div class="play-icon"></div></div>
                     </div>
                     <div class="card-content">
                         <span class="card-category">Game Dev</span>
@@ -675,8 +803,9 @@
 
                 <!-- PROJECT 5 -->
                 <article class="card fade-in">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/jX3nX6uvaEs" title="VR 360 View" allowfullscreen></iframe>
+                    <div class="video-wrapper" data-src="https://www.youtube.com/embed/jX3nX6uvaEs">
+                        <img src="https://img.youtube.com/vi/jX3nX6uvaEs/hqdefault.jpg" class="thumb" alt="VR 360 View">
+                        <div class="play-overlay"><div class="play-icon"></div></div>
                     </div>
                     <div class="card-content">
                         <span class="card-category">XR / VR</span>
@@ -687,8 +816,9 @@
 
                 <!-- PROJECT 6 -->
                 <article class="card fade-in">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/np9XtK6q-5I" title="Salvation" allowfullscreen></iframe>
+                    <div class="video-wrapper" data-src="https://www.youtube.com/embed/np9XtK6q-5I">
+                        <img src="https://img.youtube.com/vi/np9XtK6q-5I/hqdefault.jpg" class="thumb" alt="Salvation">
+                        <div class="play-overlay"><div class="play-icon"></div></div>
                     </div>
                     <div class="card-content">
                         <span class="card-category">Game Dev</span>
@@ -703,8 +833,9 @@
 
                 <!-- PROJECT 7 -->
                 <article class="card fade-in">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/DciS2osPxLc" title="EYE06" allowfullscreen></iframe>
+                    <div class="video-wrapper" data-src="https://www.youtube.com/embed/DciS2osPxLc">
+                        <img src="https://img.youtube.com/vi/DciS2osPxLc/hqdefault.jpg" class="thumb" alt="EYE06">
+                        <div class="play-overlay"><div class="play-icon"></div></div>
                     </div>
                     <div class="card-content">
                         <span class="card-category">Space / NASA</span>
@@ -719,8 +850,9 @@
 
                 <!-- PROJECT 8 -->
                 <article class="card fade-in">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/H0eOfK6CPds" title="The Mystery Vault" allowfullscreen></iframe>
+                    <div class="video-wrapper" data-src="https://www.youtube.com/embed/H0eOfK6CPds">
+                        <img src="https://img.youtube.com/vi/H0eOfK6CPds/hqdefault.jpg" class="thumb" alt="The Mystery Vault">
+                        <div class="play-overlay"><div class="play-icon"></div></div>
                     </div>
                     <div class="card-content">
                         <span class="card-category">Game Dev</span>
@@ -735,8 +867,9 @@
 
                 <!-- PROJECT 9 -->
                 <article class="card fade-in">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/LGDY46bVovA" title="Grid of hidden letters" allowfullscreen></iframe>
+                    <div class="video-wrapper" data-src="https://www.youtube.com/embed/LGDY46bVovA">
+                        <img src="https://img.youtube.com/vi/LGDY46bVovA/hqdefault.jpg" class="thumb" alt="Grid of hidden letters">
+                        <div class="play-overlay"><div class="play-icon"></div></div>
                     </div>
                     <div class="card-content">
                         <span class="card-category">Education</span>
@@ -747,8 +880,9 @@
 
                 <!-- PROJECT 10 -->
                 <article class="card fade-in">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/N2utZAYqi9Q" title="Golpokotha AR" allowfullscreen></iframe>
+                    <div class="video-wrapper" data-src="https://www.youtube.com/embed/N2utZAYqi9Q">
+                        <img src="https://img.youtube.com/vi/N2utZAYqi9Q/hqdefault.jpg" class="thumb" alt="Golpokotha AR">
+                        <div class="play-overlay"><div class="play-icon"></div></div>
                     </div>
                     <div class="card-content">
                         <span class="card-category">AR / AI</span>
@@ -763,8 +897,9 @@
 
                 <!-- PROJECT 11 -->
                 <article class="card fade-in">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/W7TS07rsGek" title="Paper Plane Earth" allowfullscreen></iframe>
+                    <div class="video-wrapper" data-src="https://www.youtube.com/embed/W7TS07rsGek">
+                        <img src="https://img.youtube.com/vi/W7TS07rsGek/hqdefault.jpg" class="thumb" alt="Paper Plane Earth">
+                        <div class="play-overlay"><div class="play-icon"></div></div>
                     </div>
                     <div class="card-content">
                         <span class="card-category">Mobile Game</span>
@@ -777,8 +912,9 @@
 
                 <!-- PROJECT 12 -->
                 <article class="card fade-in">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/QHBGw-C8VBE" title="Save the Earth" allowfullscreen></iframe>
+                    <div class="video-wrapper" data-src="https://www.youtube.com/embed/QHBGw-C8VBE">
+                        <img src="https://img.youtube.com/vi/QHBGw-C8VBE/hqdefault.jpg" class="thumb" alt="Save the Earth">
+                        <div class="play-overlay"><div class="play-icon"></div></div>
                     </div>
                     <div class="card-content">
                         <span class="card-category">Mobile Game</span>
@@ -791,8 +927,9 @@
 
                 <!-- PROJECT 13 -->
                 <article class="card fade-in">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/oqy-COdU45E" title="Virus Dodger" allowfullscreen></iframe>
+                    <div class="video-wrapper" data-src="https://www.youtube.com/embed/oqy-COdU45E">
+                        <img src="https://img.youtube.com/vi/oqy-COdU45E/hqdefault.jpg" class="thumb" alt="Virus Dodger">
+                        <div class="play-overlay"><div class="play-icon"></div></div>
                     </div>
                     <div class="card-content">
                         <span class="card-category">Game Dev</span>
@@ -807,8 +944,9 @@
 
                 <!-- PROJECT 14 -->
                 <article class="card fade-in">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/u2PKoUp_bY8" title="71 er Campus" allowfullscreen></iframe>
+                    <div class="video-wrapper" data-src="https://www.youtube.com/embed/u2PKoUp_bY8">
+                        <img src="https://img.youtube.com/vi/u2PKoUp_bY8/hqdefault.jpg" class="thumb" alt="71 er Campus">
+                        <div class="play-overlay"><div class="play-icon"></div></div>
                     </div>
                     <div class="card-content">
                         <span class="card-category">AR / History</span>
@@ -823,8 +961,9 @@
 
                  <!-- PROJECT 15 -->
                  <article class="card fade-in">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/2N6po9RF9hs" title="Run Buddy Run" allowfullscreen></iframe>
+                    <div class="video-wrapper" data-src="https://www.youtube.com/embed/2N6po9RF9hs">
+                        <img src="https://img.youtube.com/vi/2N6po9RF9hs/hqdefault.jpg" class="thumb" alt="Run Buddy Run">
+                        <div class="play-overlay"><div class="play-icon"></div></div>
                     </div>
                     <div class="card-content">
                         <span class="card-category">VR</span>
@@ -839,8 +978,9 @@
 
                  <!-- PROJECT 16 -->
                  <article class="card fade-in">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/dGins3okGJc" title="Guardian of the Garden" allowfullscreen></iframe>
+                    <div class="video-wrapper" data-src="https://www.youtube.com/embed/dGins3okGJc">
+                        <img src="https://img.youtube.com/vi/dGins3okGJc/hqdefault.jpg" class="thumb" alt="Guardian of the Garden">
+                        <div class="play-overlay"><div class="play-icon"></div></div>
                     </div>
                     <div class="card-content">
                         <span class="card-category">Game Dev</span>
@@ -855,8 +995,9 @@
 
                 <!-- PROJECT 17 -->
                 <article class="card fade-in">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/ZUXSLoXrbY0" title="GOG-VR" allowfullscreen></iframe>
+                    <div class="video-wrapper" data-src="https://www.youtube.com/embed/ZUXSLoXrbY0">
+                        <img src="https://img.youtube.com/vi/ZUXSLoXrbY0/hqdefault.jpg" class="thumb" alt="GOG-VR">
+                        <div class="play-overlay"><div class="play-icon"></div></div>
                     </div>
                     <div class="card-content">
                         <span class="card-category">VR</span>
@@ -872,7 +1013,7 @@
         </div>
     </section>
 
-    <!-- About Section (MOVED DOWN) -->
+    <!-- About Section -->
     <section id="about" class="about">
         <div class="container">
             <div class="about-grid">
@@ -921,7 +1062,7 @@
         </div>
     </section>
 
-    <!-- Accomplishments Section (ADDED HERE) -->
+    <!-- Accomplishments Section -->
     <section id="accomplishments" class="accomplishments">
         <div class="container">
             <h2 class="section-title">Accomplishments</h2>
@@ -989,11 +1130,71 @@
         </div>
     </footer>
 
-    <!-- JavaScript for Interactivity -->
+    <!-- JavaScript -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             
-            // Force Smooth Scrolling
+            // --- PRELOADER LOGIC (3.5 Seconds) ---
+            const preloader = document.querySelector('.preloader');
+            window.addEventListener('load', function() {
+                // Set timeout for 3.5 seconds (3500ms)
+                setTimeout(() => {
+                    preloader.classList.add('loaded');
+                    // Remove from DOM after fade out
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                    }, 800); 
+                }, 3500);
+            });
+
+
+            // --- VIDEO LAZY LOADING OPTIMIZATION ---
+            const videoWrappers = document.querySelectorAll('.video-wrapper');
+            
+            const videoObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const wrapper = entry.target;
+                        const videoUrl = wrapper.getAttribute('data-src');
+                        
+                        // Create the iframe
+                        const iframe = document.createElement('iframe');
+                        iframe.setAttribute('src', videoUrl);
+                        iframe.setAttribute('title', 'YouTube video player');
+                        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+                        iframe.setAttribute('allowfullscreen', '');
+                        
+                        // Replace the thumbnail content with iframe
+                        wrapper.innerHTML = '';
+                        wrapper.appendChild(iframe);
+                        
+                        // Stop observing this element
+                        observer.unobserve(wrapper);
+                    }
+                });
+            }, { rootMargin: '200px' }); // Load 200px before it appears on screen
+
+            videoWrappers.forEach(wrapper => {
+                videoObserver.observe(wrapper);
+            });
+
+
+            // --- FADE IN ANIMATION ---
+            const fadeObserverOptions = { threshold: 0.1 };
+            const fadeObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        fadeObserver.unobserve(entry.target);
+                    }
+                });
+            }, fadeObserverOptions);
+
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach(el => fadeObserver.observe(el));
+
+
+            // --- SMOOTH SCROLL & MENU ---
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -1024,22 +1225,6 @@
                     navLinks.classList.toggle('active');
                 });
             }
-
-            // Fade In Animation on Scroll
-            const observerOptions = {
-                threshold: 0.1
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, observerOptions);
-
-            const fadeElements = document.querySelectorAll('.fade-in');
-            fadeElements.forEach(el => observer.observe(el));
         });
     </script>
 </body>
