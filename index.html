@@ -719,44 +719,87 @@
             transform: translateY(0);
         }
 
-        /* --- MOBILE --- */
-        @media (max-width: 768px) {
-            .hero-content h1 {
-                font-size: 3rem;
-            }
-            .about-grid {
-                grid-template-columns: 1fr;
-            }
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                gap: 20px;
-                position: absolute;
-                top: 70px;
-                left: 0;
-                width: 100%;
-                background: rgba(2, 6, 23, 0.98);
-                padding: 30px;
-                border-bottom: 1px solid var(--card-border);
-            }
-            .nav-links.active {
-                display: flex;
-            }
-            .menu-toggle {
-                display: block;
-                color: white;
-                background: none;
-                border: none;
-                font-size: 1.5rem;
-                cursor: pointer;
-            }
+            /* --- MOBILE --- */
+    @media (max-width: 768px) {
+        /* 1. Reduce vertical spacing so more content fits on screen */
+        :root {
+            --spacing-section: 60px; 
         }
 
-        @media (min-width: 769px) {
-            .menu-toggle {
-                display: none;
-            }
+        /* 2. Fix Grids to be 1 column (100% width) */
+        .project-grid, 
+        .awards-grid {
+            grid-template-columns: 1fr !important; /* Overrides the minmax(340px) issue */
         }
+
+        /* 3. Adjust About Grid */
+        .about-grid {
+            grid-template-columns: 1fr;
+            gap: 40px; /* Reduce gap between columns */
+        }
+
+        /* 4. Adjust Hero Typography */
+        .hero-content h1 {
+            font-size: 2.5rem; /* Better fit for mobile width */
+            line-height: 1.2;
+        }
+        
+        .hero-content p {
+            font-size: 1.1rem;
+        }
+
+        .cta-btn {
+            padding: 12px 28px;
+            font-size: 0.85rem;
+        }
+
+        /* 5. Fix Background Image Parallax (Causes bugs on mobile) */
+        .hero {
+            background-attachment: scroll; /* Changes from 'fixed' to 'scroll' */
+        }
+
+        /* 6. Navigation Menu */
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+            position: absolute;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            background: rgba(2, 6, 23, 0.98);
+            padding: 30px;
+            border-bottom: 1px solid var(--card-border);
+            z-index: 999; /* Ensure it sits above content */
+        }
+        
+        .nav-links.active {
+            display: flex;
+        }
+
+        .menu-toggle {
+            display: block;
+            color: white;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    }
+            /* Extra small devices (phones, less than 400px) */
+    @media (max-width: 400px) {
+        .container {
+            padding: 0 15px; /* Reduce side margins */
+        }
+        
+        .hero-content h1 {
+            font-size: 2rem; /* Even smaller text for tiny screens */
+        }
+        
+        .contact-box {
+            padding: 30px 20px;
+        }
+    }
     </style>
 </head>
 <body>
